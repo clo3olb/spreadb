@@ -1,6 +1,6 @@
 {
-  "name": "allcamp",
-  "version": "1.0.0",
+  "name": "spreadb",
+  "version": "0.0.1",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -9,10 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/google-apps-script": "^1.0.56",
-    "lodash": "^4.17.21"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.191"
+    "@types/google-apps-script": "^1.0.56"
   }
 }
