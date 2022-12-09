@@ -1,9 +1,9 @@
-import { DataType, Entity } from "./DataTypes";
+import { Entity, EntityTypes } from "./DataTypes";
 import { Utils } from "./Utils";
 
-export type TableConfig<T extends Entity> = {
+export type TableConfig<T> = {
   name: string;
-  dataTypes: T;
+  entityTypes: EntityTypes<T>;
 };
 
 export class Table<T extends Entity> {
@@ -40,8 +40,8 @@ export class Table<T extends Entity> {
       }
     }
 
-    const headerNames = Object.keys(this.config.dataTypes).map((key) =>
-      this.config.dataTypes[key].getName()
+    const headerNames = Object.keys(this.config.entityTypes).map((key) =>
+      this.config.entityTypes[key].getName()
     );
 
     if (Utils.hasSameElements(headerNames, headers) == false) {
@@ -67,10 +67,10 @@ export class Table<T extends Entity> {
   _validate(data: T) {
     for (const key in data) {
       try {
-        this.config.dataTypes[key].validate(data[key]);
+        this.config.entityTypes[key].validate(data[key]);
       } catch (error) {
         throw new Error(
-          `'${data[key]}' cannot be type of ${this.config.dataTypes[key].getType()}. \n${error}`
+          `'${data[key]}' cannot be type of ${this.config.entityTypes[key].getType()}. \n${error}`
         );
       }
     }
@@ -104,9 +104,9 @@ export class Table<T extends Entity> {
     return data as T;
   }
 
-  headerToKey(header: string) {
-    for (const key in this.config.dataTypes) {
-      if (this.config.dataTypes[key].getName() == header) {
+  headerToKey(header: string): keyof T | undefined {
+    for (const key in this.config.entityTypes) {
+      if (this.config.entityTypes[key].getName() == header) {
         return key;
       }
     }

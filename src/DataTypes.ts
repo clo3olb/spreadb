@@ -1,7 +1,11 @@
 import { Utils } from "./Utils";
 
 export type Entity = {
-  [property: string]: DataType;
+  [property: string]: string | number;
+};
+
+export type EntityTypes<T> = {
+  [property in keyof T]: DataType;
 };
 
 export interface DataConverter {
@@ -95,5 +99,23 @@ export class DataEmail extends DataText {
 
   getType(): string {
     return "DataEmail";
+  }
+}
+export class DataGender extends DataText {
+  constructor(name: string) {
+    super(name);
+  }
+
+  validate(input: any) {
+    super.validate(input);
+    if (!this.required && !input) return;
+
+    if (input != "남" && input != "여") {
+      throw Error(`${this.headerName}: '${input}' is not a gender.`);
+    }
+  }
+
+  getType(): string {
+    return "DataGender";
   }
 }

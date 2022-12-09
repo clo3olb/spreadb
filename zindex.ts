@@ -1,19 +1,21 @@
 import { Database } from "./src/Database";
-import { DataEmail, DataNumber, DataText } from "./src/DataTypes";
+import { DataEmail, DataGender, DataNumber, DataText } from "./src/DataTypes";
 import { TableConfig } from "./src/Table";
 
 type Student = {
-  index: DataNumber;
-  name: DataText;
-  email: DataEmail;
+  index: number;
+  name: string;
+  email: string;
+  gender: string;
 };
 
 const STUDENT_TABLE_CONFIG: TableConfig<Student> = {
   name: "students",
-  dataTypes: {
+  entityTypes: {
     index: new DataNumber("#").isRequired(),
     name: new DataText("이름").isRequired(),
-    email: new DataEmail("이메일"),
+    email: new DataEmail("이메일").isRequired(),
+    gender: new DataGender("성별").isRequired(),
   },
 };
 
