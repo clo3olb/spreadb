@@ -1,4 +1,4 @@
-export class Utils {
+class Utils {
   static createUUID(prefix: string = "") {
     return prefix + Utilities.getUuid();
   }

@@ -1,12 +1,9 @@
-import { Entity, EntityTypes } from "./DataTypes";
-import { Utils } from "./Utils";
-
-export type TableConfig<T> = {
+type TableConfig<T extends Entity> = {
   name: string;
   entityTypes: EntityTypes<T>;
 };
 
-export class Table<T extends Entity> {
+class Table<T extends Entity> {
   // Primitive
   sheet: GoogleAppsScript.Spreadsheet.Sheet;
   config: TableConfig<T>;
@@ -80,8 +77,8 @@ export class Table<T extends Entity> {
     return this.getMatrix()[0];
   }
 
-  findData(key: keyof T, value: any): T[] {
-    return this.getAllData().filter((data) => data[key] == value);
+  find(predicate: (value: T, index: number, array: T[]) => boolean): T[] {
+    return this.getAllData().filter(predicate);
   }
 
   getAllData(): T[] {

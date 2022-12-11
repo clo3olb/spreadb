@@ -1,18 +1,16 @@
-import { Utils } from "./Utils";
-
-export type Entity = {
+type Entity = {
   [property: string]: string | number;
 };
 
-export type EntityTypes<T> = {
+type EntityTypes<T> = {
   [property in keyof T]: DataType;
 };
 
-export interface DataConverter {
+interface DataConverter {
   convert(input: any): any;
 }
 
-export abstract class DataType {
+abstract class DataType {
   headerName: string;
   required: boolean;
 
@@ -41,7 +39,7 @@ export abstract class DataType {
   }
 }
 
-export class DataText extends DataType {
+class DataText extends DataType {
   constructor(name: string) {
     super(name);
   }
@@ -60,7 +58,7 @@ export class DataText extends DataType {
   }
 }
 
-export class DataNumber extends DataType {
+class DataNumber extends DataType {
   constructor(name: string) {
     super(name);
   }
@@ -83,7 +81,7 @@ export class DataNumber extends DataType {
   }
 }
 
-export class DataEmail extends DataText {
+class DataEmail extends DataText {
   constructor(name: string) {
     super(name);
   }
@@ -101,7 +99,7 @@ export class DataEmail extends DataText {
     return "DataEmail";
   }
 }
-export class DataGender extends DataText {
+class DataGender extends DataText {
   constructor(name: string) {
     super(name);
   }
