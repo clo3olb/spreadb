@@ -1,8 +1,5 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "charset": "EUC-KR",
-        "noImplicitAny": true,
-        "strict": true
-    }
+        "target": "ES2020",
+    },
 }
