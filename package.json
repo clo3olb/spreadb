@@ -2,7 +2,6 @@
   "name": "spreadb",
   "version": "0.0.1",
   "description": "",
-  "main": "index.ts",
   "scripts": {
     "start": "clasp push --watch"
   },
