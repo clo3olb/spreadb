@@ -133,3 +133,4 @@ dist
 .clasp.json
 appsscript.json
 
+.DS_store
