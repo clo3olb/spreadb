@@ -1,4 +1,4 @@
-function backUp() {
+function UI_backUp() {
   const fileCopy = DriveApp.getFileById(DB_SHEETS_ID).makeCopy();
   const today = new Date();
 

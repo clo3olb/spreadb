@@ -14,18 +14,3 @@ const STUDENT_TABLE_CONFIG: TableConfig<Student> = {
     gender: new DataGender("성별").isRequired(),
   },
 };
-
-type Word = {
-  index: number;
-  english: string;
-  korean: string;
-};
-
-const WORD_TABLE_CONFIG: TableConfig<Word> = {
-  name: "words",
-  entityTypes: {
-    index: new DataNumber("#").isRequired(),
-    english: new DataText("영어").isRequired(),
-    korean: new DataText("한국어").isRequired(),
-  },
-};

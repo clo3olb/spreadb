@@ -80,4 +80,9 @@ class Utils {
     const regex = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g);
     return regex.test(email);
   }
+
+  static randomize<T>(array: T[]): T[] {
+    const copiedArray = JSON.parse(JSON.stringify(array)) as T[];
+    return copiedArray.sort(() => Math.random() - Math.random());
+  }
 }
