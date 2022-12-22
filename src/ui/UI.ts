@@ -12,9 +12,15 @@ function onOpen() {
   // BackUp
   const backUpMenu = ui.createMenu("백업").addItem("수동 백업", "backUp");
 
+  // WordTest
+  const wordTestMenu = ui
+    .createMenu("단어시험")
+    .addItem("단어시험 생성", "UI_createWordTest")
+    .addItem("단어시험 점수 데이터 업데이트", "UI_updateTestScore");
+
   // Data
-  const dataMenu = ui.createMenu("데이터").addItem("데이터 검증", "functionNameHere");
+  const dataMenu = ui.createMenu("데이터").addItem("데이터 검증", "UI_validateData");
 
   // Render
-  mainMenu.addSubMenu(backUpMenu).addSubMenu(dataMenu).addToUi();
+  mainMenu.addSubMenu(backUpMenu).addSubMenu(dataMenu).addSubMenu(wordTestMenu).addToUi();
 }

@@ -1,11 +1,3 @@
-type Entity = {
-  [property: string]: string | number;
-};
-
-type EntityTypes<T> = {
-  [property in keyof T]: DataType;
-};
-
 interface DataConverter {
   convert(input: any): any;
 }
@@ -33,7 +25,7 @@ abstract class DataType {
   }
 
   validate(input: any) {
-    if (this.required && !input) {
+    if (this.required && (input === "" || input === undefined || input === null)) {
       throw Error(`${this.headerName} is required field, but got no value.`);
     }
   }
@@ -71,7 +63,7 @@ class DataNumber extends DataType {
       throw Error(`${this.headerName}: '${input}' has trailing space.`);
     }
 
-    if (Number(input) != input) {
+    if (Number(input) !== input) {
       throw Error(`${this.headerName}: '${input}' is not appropriate number format.`);
     }
   }
@@ -99,6 +91,7 @@ class DataEmail extends DataText {
     return "DataEmail";
   }
 }
+
 class DataGender extends DataText {
   constructor(name: string) {
     super(name);
@@ -109,11 +102,34 @@ class DataGender extends DataText {
     if (!this.required && !input) return;
 
     if (input != "남" && input != "여") {
-      throw Error(`${this.headerName}: '${input}' is not a gender.`);
+      throw Error(
+        `${this.headerName}: '${input}' is not a gender. Gender type must be either '남' or '여'.`
+      );
     }
   }
 
   getType(): string {
     return "DataGender";
+  }
+}
+
+class DataWordTestType extends DataText {
+  constructor(name: string) {
+    super(name);
+  }
+
+  validate(input: any) {
+    super.validate(input);
+    if (!this.required && !input) return;
+
+    if (input != "TOEFL" && input != "SAT") {
+      throw Error(
+        `${this.headerName}: '${input}' is not a word test type. Word test type must be either TOEFL or SAT.`
+      );
+    }
+  }
+
+  getType(): string {
+    return "DataWordTestType";
   }
 }

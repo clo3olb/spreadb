@@ -28,8 +28,8 @@ const TOEFL_2400_CONFIG: TableConfig<Word> = {
   entityTypes: {
     index: new DataNumber("#").isRequired(),
     question: new DataText("question").isRequired(),
-    definition_en: new DataText("definition_en").isRequired(),
-    definition_ko: new DataText("definition_ko").isRequired(),
+    definition_en: new DataText("definition_en"),
+    definition_ko: new DataText("definition_ko"),
     answer: new DataText("answer").isRequired(),
     choice_1: new DataText("choice_1").isRequired(),
     choice_2: new DataText("choice_2").isRequired(),
@@ -41,8 +41,8 @@ const SAT_2400_CONFIG: TableConfig<Word> = {
   entityTypes: {
     index: new DataNumber("#").isRequired(),
     question: new DataText("question").isRequired(),
-    definition_en: new DataText("definition_en").isRequired(),
-    definition_ko: new DataText("definition_ko").isRequired(),
+    definition_en: new DataText("definition_en"),
+    definition_ko: new DataText("definition_ko"),
     answer: new DataText("answer").isRequired(),
     choice_1: new DataText("choice_1").isRequired(),
     choice_2: new DataText("choice_2").isRequired(),
@@ -51,7 +51,3 @@ const SAT_2400_CONFIG: TableConfig<Word> = {
 };
 
 type WordTestType = "TOEFL" | "SAT";
-type WordTestScore = {
-  name: string;
-  score: number;
-};

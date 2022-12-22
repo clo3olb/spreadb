@@ -9,14 +9,26 @@ function getWordTable(type: WordTestType): Table<Word> {
   if (type == "TOEFL") return db.getTable(TOEFL_2400_CONFIG);
 }
 
-function createWordTest(title: string, type: WordTestType, startIndex: number, endIndex: number) {
+function createWordTest(
+  title: string,
+  type: WordTestType,
+  startIndex: number,
+  endIndex: number,
+  limit: number
+): GoogleAppsScript.Forms.Form {
+  const numberOfQuestions = endIndex - startIndex + 1;
+  if (numberOfQuestions < limit) {
+    throw new Error(
+      `'Cannot create Test(${title}) because number of questions required is larger than all the words from index. Words from ${startIndex} ~ ${endIndex} cannot create ${limit} questions.`
+    );
+  }
   const table = getWordTable(type);
-  const words = table.find((word) => word.index >= startIndex && word.index <= endIndex);
+  const words = table.findAll((word) => word.index >= startIndex && word.index <= endIndex);
   const mixedWords = Utils.randomize(words);
-  createWordTestForm(title, mixedWords);
+  return createWordTestForm(title, mixedWords.slice(0, numberOfQuestions));
 }
 
-function createWordTestForm(title: string, words: Word[]) {
+function createWordTestForm(title: string, words: Word[]): GoogleAppsScript.Forms.Form {
   // Check existence
   const folder = DriveApp.getFolderById(WORD_TEST_FOLDER_ID);
   if (folder.getFilesByName(title).hasNext()) {
@@ -42,6 +54,8 @@ function createWordTestForm(title: string, words: Word[]) {
     const choices = Utils.randomize([word.answer, word.choice_1, word.choice_2, word.choice_3]);
     mc.setChoices(choices.map((choice) => mc.createChoice(choice, word.answer == choice)));
   });
+
+  return form;
 }
 
 function getNameFromResponse(response: GoogleAppsScript.Forms.FormResponse): string {
@@ -58,15 +72,17 @@ function getTestScoreFromResponse(response: GoogleAppsScript.Forms.FormResponse)
   return score;
 }
 
-function getTestScoresFromForm(form: GoogleAppsScript.Forms.Form): WordTestScore[] {
+function getTestScoresFromForm(form: GoogleAppsScript.Forms.Form) {
   const responses = form.getResponses();
-  const scores: WordTestScore[] = responses.map((response) => {
+  const scores = responses.map((response) => {
     const name = getNameFromResponse(response);
     const score = getTestScoreFromResponse(response);
-    return {
+    const testScore = {
       name,
       score,
+      timestamp: response.getTimestamp().getTime(),
     };
+    return testScore;
   });
   return scores;
 }
