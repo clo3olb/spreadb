@@ -130,7 +130,5 @@ dist
 .pnp.*
 
 # Custom
-.clasp.json
-appsscript.json
 
 .DS_store
